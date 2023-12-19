@@ -1,4 +1,4 @@
-from app.models import TrackingMixin
+from models import TrackingMixin
 from sqlmodel import SQLModel, Field
 
 

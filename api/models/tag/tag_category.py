@@ -1,4 +1,4 @@
-from app.models import TrackingMixin, TagsCategories
+from models import TrackingMixin, TagsCategories, Tag
 from sqlmodel import SQLModel, Field, Relationship
 from typing import List, Optional
 

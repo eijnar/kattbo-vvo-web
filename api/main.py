@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from os import environ
-from app.core.config import setup_configuration, setup_logging
-from app.api import endpoint_router
-import logging
+from core.config import setup_configuration, setup_logging
+from api import endpoint_router
 from dotenv import load_dotenv
 
 
@@ -11,7 +10,7 @@ def create_app(config_class: object) -> FastAPI:
     setup_logging(config_class)
 
     # Routes
-    app.include_router(endpoint_router)
+    include_router(endpoint_router)
 
     return app
 

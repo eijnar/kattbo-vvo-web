@@ -1,32 +1,10 @@
 from sqlmodel import SQLModel, Field, Relationship
-from app.models import utils
-from app import models
+from models import TrackingMixin, RolesUsers, Role, UsersTags
 from typing import List, Optional
 from datetime import datetime
 
 
-class RolesUsers(utils.TrackingMixin, SQLModel, table=True):
-    __tablename__ = 'roles_users'
-    role_id: int = Field(
-        defualt=None,
-        foreign_key="role.id",
-        primary_key=True,
-        sa_column_kwargs={"ondelete": "CASCADE"}
-    )
-    role_id: int = Field(
-        defualt=None,
-        foreign_key="user.id",
-        primary_key=True,
-        sa_column_kwargs={"ondelete": "CASCADE"}
-    )
-
-
-
-
-
-
-
-class User(utils.TrackingMixin, SQLModel, table=True):
+class User(TrackingMixin, SQLModel, table=True):
     # Flask-Security-Too specific columns
     id: int = Field(default=None, primary_key=True)
     username: Optional[str] = Field(max_length=255)
@@ -55,28 +33,28 @@ class User(utils.TrackingMixin, SQLModel, table=True):
     # Many-to-Many Relationships
     roles: List["Role"] = Relationship(
         back_populates="users", link_model=RolesUsers)
-    tags: List["models.Tag"] = Relationship(
+    tags: List["Tag"] = Relationship(
         back_populates="tag_users", link_model=UsersTags)
 
     # One-to-Many Relationships
-    users_events: List["models.UsersEvents"] = Relationship(
+    users_events: List["UsersEvents"] = Relationship(
         back_populates="user"
     )
-    created_events: List["models.Event"] = Relationship(
+    created_events: List["Event"] = Relationship(
         back_populates="creator"
     )
-    general_preferences: List["models.UserPreference"] = Relationship(
+    general_preferences: List["UserPreference"] = Relationship(
         back_populates="preference_user"
     )
-    notification_preferences: List["models.UserNotificationPreference"] = Relationship(
+    notification_preferences: List["UserNotificationPreference"] = Relationship(
         back_populates="user_notification_preferences"
     )
-    hunt_years: List["models.UserTeamYear"] = Relationship(
+    hunt_years: List["UserTeamYear"] = Relationship(
         back_populates="user"
     )
-    stand_assignments: List["models.StandAssignment"] = Relationship(
+    stand_assignments: List["StandAssignment"] = Relationship(
         back_populates="user"
     )
-    posts: List["models.Post"] = Relationship(
+    posts: List["Post"] = Relationship(
         back_populates="author"
     )
